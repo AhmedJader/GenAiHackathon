@@ -39,7 +39,7 @@ export default function Home() {
 
         {/* Conditional "Get Started" Button */}
         {selectedSubject && (
-          <Link href={`/quiz/questions?subject=${encodeURIComponent(selectedSubject)}`}>
+          <Link href={selectedSubject === "Advanced Functions" ? "/quiz/advancedfunctions" : `/quiz/questions?subject=${encodeURIComponent(selectedSubject)}`}>
             <Button size="lg" className="gradient-bg hover:scale-105 transition-transform duration-500 ease-in-out hover:cursor-pointer">
               Get Started
             </Button>

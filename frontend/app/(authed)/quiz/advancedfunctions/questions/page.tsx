@@ -3,23 +3,46 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-export default function QuizQuestions() {
+export default function AdvancedFunctionsQuestions() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   
-  // Example questions - you can replace these with your actual questions
   const questions = [
     {
-      question: "Sample Question 1?",
-      options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+      question: "What is a closure in JavaScript?",
+      options: [
+        "A function that has access to variables in its outer scope",
+        "A function that only uses local variables",
+        "A function that cannot access outer variables",
+        "A function without parameters"
+      ],
       correctAnswer: 0
     },
-    // Add more questions here
+    {
+      question: "Which statement about arrow functions is correct?",
+      options: [
+        "They always require parentheses around parameters",
+        "They have their own 'this' binding",
+        "They inherit 'this' from the enclosing scope",
+        "They can be used as constructors"
+      ],
+      correctAnswer: 2
+    },
+    {
+      question: "What is function currying?",
+      options: [
+        "Converting a function into an arrow function",
+        "Transforming a function that takes multiple arguments into a sequence of functions that take a single argument",
+        "Making a function return undefined",
+        "Combining two functions into one"
+      ],
+      correctAnswer: 1
+    }
   ];
 
   return (
-    <main className="flex min-h-screen items-center justify-center relative container mx-auto px-4 py-8 animate-fade duration-300 ease-in-out">
-      <div className="max-w-2xl mx-auto mb-20">
-        <h1 className="text-2xl font-bold mb-8">Quiz Questions</h1>
+    <main className="container mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-2xl font-bold mb-8">Advanced Functions Quiz</h1>
         
         {currentQuestion < questions.length ? (
           <div className="space-y-6">
@@ -29,7 +52,7 @@ export default function QuizQuestions() {
                 <Button
                   key={index}
                   variant="outline"
-                  className="w-full hover:animate-pulse hover:scale-105 transition-transform duration-300 ease-in-out hover:cursor-pointer text-left justify-start h-auto py-4 px-6"
+                  className="w-full text-left justify-start h-auto py-4 px-6"
                   onClick={() => {
                     // Handle answer selection here
                     if (index === questions[currentQuestion].correctAnswer) {
