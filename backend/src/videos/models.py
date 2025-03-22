@@ -1,5 +1,5 @@
-from pydantic import BaseModel
+# from pydantic import BaseModel
 
-class Video(BaseModel):
-    title: str
-    url: str
+# class Video(BaseModel):
+#     title: str
+#     url: str
