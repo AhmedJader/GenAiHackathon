@@ -4,7 +4,6 @@ import Savings from "@/components/savingstats";
 import Nav from "@/components/navbar";
 
 export default function Home() {
-
   return (
     <main className="flex min-h-screen items-center justify-center">
       {/* Background gradient */}
@@ -12,17 +11,16 @@ export default function Home() {
       <Nav />
 
       <div className="scale-70 animate-fade animate-duration-2000">
-      <OpenAIPower />
+        <OpenAIPower />
       </div>
 
       <div className="scale-70 animate-fade animate-duration-2000">
-      <OurPower />
+        <OurPower />
       </div>
 
       <div className="scale-70 animate-fade animate-duration-2000">
-      <Savings />
+        <Savings />
       </div>
     </main>
   );
 }
-

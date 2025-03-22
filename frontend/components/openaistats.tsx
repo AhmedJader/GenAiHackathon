@@ -33,15 +33,12 @@ export default function OpenAIPower() {
 
   return (
     <div className="flex flex-col items-center justify-center p-6 bg-red-900 text-white rounded-xl shadow-lg">
+      TODO add a shad cn chart
       <h2 className="text-2xl font-bold">🔋 OpenAI Live Power Usage</h2>
-      
-      <p className="text-4xl font-semibold mt-2">
-        {powerUsed.toFixed(2)} kWh
-      </p>
+      <p className="text-4xl font-semibold mt-2">{powerUsed.toFixed(2)} kWh</p>
       <span className="text-sm text-gray-400">
         Estimated power consumption in real time
       </span>
-
       <h2 className="text-2xl font-bold mt-4">💰 Ontario Cost</h2>
       <p className="text-4xl font-semibold mt-2">
         ${costIncurred.toFixed(4)} CAD
@@ -49,7 +46,6 @@ export default function OpenAIPower() {
       <span className="text-sm text-gray-400">
         Cost based on Ontario’s electricity rates
       </span>
-
       <h2 className="text-2xl font-bold mt-4">🌎 CO₂ Emissions</h2>
       <p className="text-4xl font-semibold mt-2">
         {co2Emissions.toFixed(4)} kg CO₂
@@ -57,7 +53,6 @@ export default function OpenAIPower() {
       <span className="text-sm text-gray-400">
         Carbon footprint from AI power usage
       </span>
-
       <h2 className="text-2xl font-bold mt-4">⚡ Per Second Stats</h2>
       <p className="text-lg">
         Power per second: {POWER_PER_QUERY.toFixed(6)} kWh
@@ -65,9 +60,7 @@ export default function OpenAIPower() {
       <p className="text-lg">
         Cost per second: ${COST_PER_QUERY.toFixed(6)} CAD
       </p>
-      <p className="text-lg">
-        CO₂ per second: {CO2_PER_QUERY.toFixed(6)} kg
-      </p>
+      <p className="text-lg">CO₂ per second: {CO2_PER_QUERY.toFixed(6)} kg</p>
       <p className="text-lg mt-2">
         Runtime (seconds): {queriesProcessed.toLocaleString()}
       </p>
