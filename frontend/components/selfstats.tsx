@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const SELFHOSTED_KWH_PER_SECOND = 0.09 / 3600; // 0.000025 kWh per second
-const SELFHOSTED_QUERIES_PER_SECOND = 2; // Assume 2 queries per second
+const SELFHOSTED_QUERIES_PER_SECOND = 1; // Assume 2 queries per second
 const POWER_PER_QUERY = SELFHOSTED_KWH_PER_SECOND / SELFHOSTED_QUERIES_PER_SECOND; // kWh per query
 
 const ONTARIO_COST_PER_KWH = 0.13; // Ontario electricity price (CAD)
@@ -33,7 +33,7 @@ export default function SelfHostedPower() {
 
   return (
     <div className="flex flex-col items-center justify-center p-6 bg-gray-900 text-white rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold">🔋 Self-Hosted Llama3 Power Usage</h2>
+      <h2 className="text-2xl font-bold">🔋 Self-Hosted Rag Pipeline Power Usage</h2>
       
       <p className="text-4xl font-semibold mt-2">
         {powerUsed.toFixed(6)} kWh
@@ -58,18 +58,18 @@ export default function SelfHostedPower() {
         Carbon footprint from AI power usage
       </span>
 
-      <h2 className="text-2xl font-bold mt-4">⚡ Per Query Stats</h2>
+      <h2 className="text-2xl font-bold mt-4">⚡ Per Second Stats</h2>
       <p className="text-lg">
-        Power per Query: {POWER_PER_QUERY.toFixed(8)} kWh
+        Power per second: {POWER_PER_QUERY.toFixed(8)} kWh
       </p>
       <p className="text-lg">
-        Cost per Query: ${COST_PER_QUERY.toFixed(8)} CAD
+        Cost per second: ${COST_PER_QUERY.toFixed(8)} CAD
       </p>
       <p className="text-lg">
-        CO₂ per Query: {CO2_PER_QUERY.toFixed(8)} kg
+        CO₂ per second: {CO2_PER_QUERY.toFixed(8)} kg
       </p>
       <p className="text-lg mt-2">
-        Queries Processed: {queriesProcessed.toLocaleString()}
+        Runtime (seconds): {queriesProcessed.toLocaleString()}
       </p>
     </div>
   );

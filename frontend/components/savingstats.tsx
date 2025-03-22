@@ -65,26 +65,26 @@ export default function SelfHostedSavings() {
       <h2 className="text-2xl font-bold">🌱 Self-Hosting Savings</h2>
 
       <h3 className="text-xl font-semibold mt-4">🔋 Power Saved</h3>
-      <p className="text-4xl font-semibold">{powerSavings.toFixed(2)} kWh</p>
+      <p className="text-4xl font-semibold">{powerSavings.toFixed(3)} kWh</p>
       <span className="text-sm text-gray-300">
         {powerReduction.toFixed(2)}% less power usage
       </span>
 
       <h3 className="text-xl font-semibold mt-4">💰 Cost Savings</h3>
-      <p className="text-4xl font-semibold">${costSavings.toFixed(2)} CAD</p>
+      <p className="text-4xl font-semibold">${costSavings.toFixed(3)} CAD</p>
       <span className="text-sm text-gray-300">
         {costReduction.toFixed(2)}% cost reduction
       </span>
 
       <h3 className="text-xl font-semibold mt-4">🌎 CO₂ Reduction</h3>
-      <p className="text-4xl font-semibold">{co2Savings.toFixed(2)} kg CO₂</p>
+      <p className="text-4xl font-semibold">{co2Savings.toFixed(3)} kg CO₂</p>
       <span className="text-sm text-gray-300">
         {co2Reduction.toFixed(2)}% lower carbon footprint
       </span>
 
       <h3 className="text-xl font-semibold mt-4">🌳 Environmental Impact</h3>
-      <p className="text-lg">{treesSaved.toFixed(2)} trees saved</p>
-      <p className="text-lg">{gasolineSaved.toFixed(2)} liters of gas avoided</p>
+      <p className="text-lg">{treesSaved.toFixed(3)} trees saved</p>
+      <p className="text-lg">{gasolineSaved.toFixed(3)} liters of gas avoided</p>
 
       <span className="text-sm text-gray-400 mt-4">
         *Comparison based on OpenAI model power usage

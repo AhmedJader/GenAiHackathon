@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const OPENAI_KWH_PER_SECOND = 120833 / 3600; // 33.56 kWh per second
-const OPENAI_QUERIES_PER_SECOND = 100; // Assumed QPS
+const OPENAI_QUERIES_PER_SECOND = 1; // Assumed QPS
 const POWER_PER_QUERY = OPENAI_KWH_PER_SECOND / OPENAI_QUERIES_PER_SECOND; // kWh per query
 
 const ONTARIO_COST_PER_KWH = 0.13; // Average Ontario electricity price (CAD)
@@ -58,18 +58,18 @@ export default function OpenAIPower() {
         Carbon footprint from AI power usage
       </span>
 
-      <h2 className="text-2xl font-bold mt-4">⚡ Per Query Stats</h2>
+      <h2 className="text-2xl font-bold mt-4">⚡ Per Second Stats</h2>
       <p className="text-lg">
-        Power per Query: {POWER_PER_QUERY.toFixed(6)} kWh
+        Power per second: {POWER_PER_QUERY.toFixed(6)} kWh
       </p>
       <p className="text-lg">
-        Cost per Query: ${COST_PER_QUERY.toFixed(6)} CAD
+        Cost per second: ${COST_PER_QUERY.toFixed(6)} CAD
       </p>
       <p className="text-lg">
-        CO₂ per Query: {CO2_PER_QUERY.toFixed(6)} kg
+        CO₂ per second: {CO2_PER_QUERY.toFixed(6)} kg
       </p>
       <p className="text-lg mt-2">
-        Queries Processed: {queriesProcessed.toLocaleString()}
+        Runtime (seconds): {queriesProcessed.toLocaleString()}
       </p>
     </div>
   );
