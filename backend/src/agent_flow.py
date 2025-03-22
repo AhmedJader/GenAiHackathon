@@ -1,5 +1,6 @@
 from langchain_ollama.llms import OllamaLLM
 from langchain_google_vertexai import VertexAI
+from langchain_openai import ChatOpenAI
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_ollama import OllamaEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -7,6 +8,12 @@ from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
+from typing import List, Dict
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 from vertexai.generative_models import (
     HarmCategory,
@@ -55,7 +62,25 @@ class Quiz:
         self.llm_strength = OllamaLLM(model = "wizardlm2:7b", temperature= 0.4)
         self.llm_rag = OllamaLLM(model="gemma", temperature=0.4)
         self.llm_lang = OllamaLLM(model = "stablelm2", temperature= 0.2)
+        self.llm_openai = ChatOpenAI(model="gpt-4o", temperature=0.2, api_key= openai_api_key)
         self.llm_video = LLM().llm
+        
+    
+
+    def merge_quiz_with_responses(quiz_questions: List[Dict], quiz_responses: List[Dict]) -> List[Dict]:
+        # First, build a lookup table for responses
+        response_lookup = {resp["question_number"]: resp["user_response"] for resp in quiz_responses}
+        
+        merged = []
+        for q in quiz_questions:
+            q_num = q["question_number"]
+            merged.append({
+                "question_number": q_num,
+                "question": q["question"],
+                "user_response": response_lookup.get(q_num, None)  # or use "" instead of None
+            })
+        
+        return merged
 
 
     def get_weaknesses(self, quiz_answers):

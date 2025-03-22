@@ -143,27 +143,20 @@ Here are the students quiz results summary that you can use to answer the questi
 trans_template = """
 You are an assistant for translating from English to **French.**
 
-You are taking in a student detailed learning path but returning it in **French.**
+Take in the below input and strictly return the translation in **French.**
 
 
-Here is the student detailed learning path:
+Here is the input:
 {}
 
 
-## Output Structure:
-- Make sure to keep the same format as the input.
-- Only display output in **French**
-- DO NOT OUTPUT CODE
-- DO NOT WRAP ANSWER IN (''' ''')
-- DO NOT RETURN JSON
-- DO NOT RETURN ANYTHING OTHER THAN THE TRANSLATION
-
 """
 
+"""
 video_prompt = ''' 
 
-You are an agent that takes in a student learning path and recommedns videos to watch based 
-on the topics they need improved on.
+You are an agent that takes in a student learning path and recommended videos to watch based 
+on the topics they need improved on. Only include khan academy videos
 
 Please return for a each topic a few video recommendations.
 
@@ -171,6 +164,32 @@ Each recommendation should be in the following format:
 
 Video: (video title)
 Link: (video link)
+
+Here is the student learning path:
+
+{}
+
+## Output Structure:
+- DO NOT DISPLAY PYTHONCODE
+- DO NOT DISPLAY JSON
+- DO NOT WRAP ANSWER IN (''' ''')
+
+
+'''
+
+"""
+
+video_prompt = ''' 
+
+You are an agent that takes in a student learning path and recommended online resources based 
+on the topics they need improved on. 
+
+Please return for a each topic a few link recommendations.
+
+Each recommendation should be in the following format:
+
+Website: (title)
+Link: ( website link)
 
 Here is the student learning path:
 
