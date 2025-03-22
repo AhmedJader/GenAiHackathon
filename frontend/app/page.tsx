@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import HomeNavbar from "@/components/ui/home-navbar";
 
 import { ChevronRight, Code, BookOpen, Award, Users, Zap } from "lucide-react";
 import Link from "next/link";
@@ -17,6 +18,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen dark">
+      <HomeNavbar />
+
       <div className="flex-1">
         <section className="relative overflow-hidden bg-gradient-to-b from-background to-background/95">
           <div className="container mx-auto px-4 py-16 md:py-24">
