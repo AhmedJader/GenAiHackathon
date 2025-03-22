@@ -9,19 +9,19 @@ export default function Home() {
       
       <Nav />
 
-      <div className="load_animation flex flex-col items-center justify-center">
+      <div className="load_animation flex flex-col items-center justify-center mx-auto mb-20">
         <Image
           src="/logo.webp"
           alt="IntelliEarth Logo"
           width={400}
           height={400}
-          className="block max-w-sm mb-6"
+          className="block max-w-sm mb-6 transition-all duration-100 ease-in-out"
         />
         
-        <div className="text-center mb-30">
+        <div className="text-center">
           <h1 className="text-4xl font-bold text-white">
             Welcome to{" "}
-            <span className="bg-gradient-to-r from-green-500 to-amber-900 bg-clip-text text-transparent animate-pulse">
+            <span className="bg-gradient-to-r from-green-500 to-amber-900 bg-clip-text text-transparent">
               IntelliEarth!
             </span>
           </h1>
