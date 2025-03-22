@@ -1,0 +1,73 @@
+[
+    {
+      "question_number": 1,
+      "question": "Solve for x: 3^x = 81",
+      "answer": "4",
+      "difficulty": "easy",
+      "topic": "exponential equations"
+    },
+    {
+      "question_number": 2,
+      "question": "Simplify: log(1000) - log(10)",
+      "answer": "2",
+      "difficulty": "medium",
+      "topic": "logarithmic properties"
+    },
+    {
+      "question_number": 3,
+      "question": "Convert 90° to radians.",
+      "answer": "π/2",
+      "difficulty": "easy",
+      "topic": "radian measure"
+    },
+    {
+      "question_number": 4,
+      "question": "Determine the exact value: sin(π/4) * cos(π/4)",
+      "answer": "1/2",
+      "difficulty": "medium",
+      "topic": "trigonometric identity"
+    },
+    {
+      "question_number": 5,
+      "question": "State the vertical asymptote of: f(x) = 1 / (x^2 - 9)",
+      "answer": "x = ±3",
+      "difficulty": "hard",
+      "topic": "rational functions"
+    },
+    {
+      "question_number": 6,
+      "question": "Given f(x) = (x - 2)(x + 1)(x - 5), list all x-intercepts.",
+      "answer": "-1, 2, 5",
+      "difficulty": "medium",
+      "topic": "polynomial roots"
+    },
+    {
+      "question_number": 7,
+      "question": "Given f(x) = x^2 + 2x, find the average rate of change from x = 1 to x = 4.",
+      "answer": "6",
+      "difficulty": "hard",
+      "topic": "average rate of change"
+    },
+    {
+      "question_number": 8,
+      "question": "What is the vertical stretch factor of the function: f(x) = 3sin(x)",
+      "answer": "3",
+      "difficulty": "medium",
+      "topic": "function transformations"
+    },
+    {
+      "question_number": 9,
+      "question": "Solve for x: log(5x + 6) = 2",
+      "answer": "13.8",
+      "difficulty": "hard",
+      "topic": "logarithmic equations"
+    },
+    {
+      "question_number": 10,
+      "question": "If f(x) = x^2 and g(x) = 2x + 3, find f(g(1)).",
+      "answer": "25",
+      "difficulty": "hard",
+      "topic": "function composition"
+    }
+  ]
+  
