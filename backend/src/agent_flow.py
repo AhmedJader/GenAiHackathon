@@ -2,6 +2,8 @@ from langchain_ollama.llms import OllamaLLM
 from langchain_google_vertexai import VertexAI
 from langchain_openai import ChatOpenAI
 from langchain_community.document_loaders import PyPDFLoader
+from langchain.cache import SQLiteCache
+from langchain.globals import set_llm_cache
 from langchain_ollama import OllamaEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
@@ -41,6 +43,12 @@ safety_settings = {
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
                 HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
 }
+
+
+# Create or load SQLite cache
+set_llm_cache(SQLiteCache(database_path=".langchain.db"))
+
+
 class LLM:
     def __init__(self):
         self.llm = VertexAI(
@@ -58,11 +66,11 @@ class LLM:
 import logging
 class Quiz:
     def __init__(self):
-        self.llm_base = OllamaLLM(model= "mathstral:latest", temperature=0.3)
-        self.llm_strength = OllamaLLM(model = "wizardlm2:7b", temperature= 0.4)
+        self.llm_mathstral = OllamaLLM(model= "mathstral:latest", temperature=0.3)
         self.llm_rag = OllamaLLM(model="gemma", temperature=0.4)
-        self.llm_lang = OllamaLLM(model = "stablelm2", temperature= 0.2)
-        self.llm_openai = ChatOpenAI(model="gpt-4o", temperature=0.2, api_key= openai_api_key)
+        self.llm_lang = OllamaLLM(model = "stablelm2", temperature= 0)
+        self.llm_deepseek = OllamaLLM(model = "deepseek-r1", temperature= 0.2)
+        #self.llm_openai = ChatOpenAI(model="gpt-4o", temperature=0.2, api_key= openai_api_key)
         self.llm_video = LLM().llm
         
     
@@ -86,7 +94,7 @@ class Quiz:
     def get_weaknesses(self, quiz_answers):
         
         prompt_final = prompt_weakness.format(sample_data, quiz_answers)
-        res = self.llm_base.invoke(prompt_final)
+        res = self.llm_mathstral.invoke(prompt_final)
         logging.info(f"weaknesses: {res}")
         
         return res
@@ -94,7 +102,8 @@ class Quiz:
     def get_strengths(self, quiz_answers):
         
         prompt_final = prompt_strength.format(sample_data, quiz_answers)
-        res = self.llm_video.invoke(prompt_final)
+        res = self.llm_deepseek.invoke(prompt_final)
+        res = res.split("<think>")[1].split("</think>")[1]
         logging.info(f"strengths: {res}")
         return res
     
@@ -145,7 +154,8 @@ class Quiz:
     def trans_strength(self, strengths_rag):
         prompt_lang_strength = trans_template.format(strengths_rag)
 
-        res_lang_strength = self.llm_lang.invoke(prompt_lang_strength)
+        res_lang_strength = self.llm_deepseek.invoke(prompt_lang_strength)
+        res_lang_strength = res_lang_strength.split("<think>")[1].split("</think>")[1]
         logging.info(f'Strengths translated: {res_lang_strength}')
         
         return res_lang_strength
@@ -154,7 +164,8 @@ class Quiz:
         
         prompt_lang = trans_template.format(learning_path)
 
-        res_lang = self.llm_lang.invoke(prompt_lang)
+        res_lang = self.llm_deepseek.invoke(prompt_lang)
+        res_lang = res_lang.split("<think>")[1].split("</think>")[1]
         logging.info(f'Learning Path translated: {res_lang}')
         
         return res_lang
@@ -163,7 +174,8 @@ class Quiz:
         
         video_prompt_final = video_prompt.format(learning_path)
 
-        res_video = self.llm_video.invoke(video_prompt_final)
+        res_video = self.llm_deepseek.invoke(video_prompt_final)
+        res_video = res_video.split("<think>")[1].split("</think>")[1]
         
         return res_video
         
@@ -194,7 +206,7 @@ def main(sample_answers):
     print('\n\n')
     print("Weaknesses Translated: ", trans_weakness)
     print('\n\n')
-    print("Videos: ", videos)
+    print("Resources: ", videos)
  
     
 main(sample_answers)

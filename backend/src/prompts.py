@@ -118,7 +118,7 @@ Here are the user responses json(2):
 ## Output Format
 - DO NOT RETURN CODE
 - DO NOT RETURN JSON
-- DO NOT WRAP ANSWER IN (''' ''')
+- DO NOT WRAP ANSWER IN (``` ```)
 '''
 
 
@@ -144,6 +144,11 @@ trans_template = """
 You are an assistant for translating from English to **French.**
 
 Take in the below input and strictly return the translation in **French.**
+
+Rules:
+    - dont return python code.
+    - dont return json.
+    - dont wrap answer in (```python ```)
 
 
 Here is the input:
