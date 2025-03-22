@@ -22,4 +22,7 @@ async def post_answers(answers: List[models.TestAnswer]):
 
 @quiz_router.get("/answers/{request_id}", response_class=PlainTextResponse)
 async def get_answer_by_id(request_id: str):
-    return schema.request_results[request_id]
+    res = schema.request_results.get(request_id)
+    if res is None:
+        return PlainTextResponse("Not Found", status_code=404)
+    return res
