@@ -17,8 +17,8 @@ export default function QuizQuestions() {
   ];
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="max-w-2xl mx-auto">
+    <main className="flex min-h-screen items-center justify-center relative container mx-auto px-4 py-8 animate-fade duration-300 ease-in-out">
+      <div className="max-w-2xl mx-auto mb-20">
         <h1 className="text-2xl font-bold mb-8">Quiz Questions</h1>
         
         {currentQuestion < questions.length ? (
@@ -29,7 +29,7 @@ export default function QuizQuestions() {
                 <Button
                   key={index}
                   variant="outline"
-                  className="w-full text-left justify-start h-auto py-4 px-6"
+                  className="w-full hover:animate-pulse hover:scale-105 transition-transform duration-300 ease-in-out hover:cursor-pointer text-left justify-start h-auto py-4 px-6"
                   onClick={() => {
                     // Handle answer selection here
                     if (index === questions[currentQuestion].correctAnswer) {
