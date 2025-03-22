@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import PlainTextResponse
 from . import models
 quiz_router = APIRouter()
 
@@ -8,11 +9,11 @@ quiz_router = APIRouter()
 # async def get_users():
 #     return schemas.a
 
-@quiz_router.post("/answers")
-async def post_user_answers(answers: List[models.TestAnswer]):
+@quiz_router.post("/weaknesses",  response_class=PlainTextResponse)
+async def get_weaknessess(answers: List[models.TestAnswer]):
     # run llm logic
     # run other functions
     
 
     
-    return answers
+    return "dsfdsfdsf"
