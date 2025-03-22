@@ -26,9 +26,9 @@ export default function Home() {
   };
   return (
     <div className="flex flex-col dark">
-      <HomeNavbar />
+      <Nav />
 
-      <div className="flex-1 animate-fade-down">
+      <div className="flex-1 animate-fade-down transition-transform duration-500 ease-in-out">
         <section className="relative overflow-hidden bg-gradient-to-b from-background to-background/95">
           <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -41,10 +41,19 @@ export default function Home() {
                 </div>
                 <AnimatedHeroText />
                 <div className="flex flex-col sm:flex-row gap-4 mt-2">
-                  <Button size="lg" onClick={handleClick} className="gradient-bg hover:scale-105 transition-transform duration-500 ease-in-out hover:cursor-pointer">
+                  <Button
+                    size="lg"
+                    onClick={handleClick}
+                    className="gradient-bg hover:scale-105 transition-transform duration-500 ease-in-out hover:cursor-pointer"
+                  >
                     Get Started
                   </Button>
-                  <Button variant="outline" onClick={() => router.push("#learn")} className="hover:scale-105 hover:cursor-pointer transition-transform duration-300 ease-in-out" size="lg">
+                  <Button
+                    variant="outline"
+                    onClick={() => router.push("#learn")}
+                    className="hover:scale-105 hover:cursor-pointer transition-transform duration-300 ease-in-out"
+                    size="lg"
+                  >
                     Learn More
                   </Button>
                 </div>
@@ -75,12 +84,21 @@ export default function Home() {
                 Section Etc
               </h2>
               <p className="text-lg text-muted-foreground" id="learn">
-                IntelliEarth is an <span className="gradient-text animate-pulse"> Agentic RAG-LLM </span> Pipelined Personalized Tutor
-                that transforms static curricula into an interactive AI-driven
-                learning system. By leveraging <span className="gradient-text animate-pulse"> Self Hosted </span> retrieval pipelines,
-                local embeddings, and on-device inference, IntelliEarth delivers
-                low-latency, Privacy First, and contextually aware tutoring,
-                empowering students with adaptive, intelligent study assistance.
+                IntelliEarth is an{" "}
+                <span className="gradient-text animate-pulse">
+                  {" "}
+                  Agentic RAG-LLM{" "}
+                </span>{" "}
+                Pipelined Personalized Tutor that transforms static curricula
+                into an interactive AI-driven learning system. By leveraging{" "}
+                <span className="gradient-text animate-pulse">
+                  {" "}
+                  Self Hosted{" "}
+                </span>{" "}
+                retrieval pipelines, local embeddings, and on-device inference,
+                IntelliEarth delivers low-latency, Privacy First, and
+                contextually aware tutoring, empowering students with adaptive,
+                intelligent study assistance.
               </p>
             </div>
           </div>
