@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-import logging
+from quiz.router import quiz_router
 
-from src.users.router import user_router
+
+import logging
 
 app = FastAPI()
 
@@ -12,4 +13,5 @@ async def root():
     return {"message": "Hello World!"}
 
 
-app.include_router(user_router, prefix="/users", tags=["User"])
+
+app.include_router(quiz_router, prefix="/quiz", tags=["Quiz"])
