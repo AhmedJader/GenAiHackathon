@@ -31,7 +31,7 @@ export default function AdvancedFunctions() {
             <p className="text-xl font-bold mt-3 text-gray-800">✨ Beginner Friendly</p>
             <p className="text-gray-600 mt-2">Perfect for students starting their journey.</p>
             <Link href="/quiz/advancedfunctions/questions" className="block mt-6">
-              <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+              <Button className="w-full bg-blue-400 hover:bg-blue-300 text-lg py-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                 Start Quiz →
               </Button>
             </Link>
@@ -43,7 +43,7 @@ export default function AdvancedFunctions() {
       <div className="container mx-auto px-40 py-24">
         <div className="flex justify-between items-start gap-20">
           {/* AI Help Card */}
-          <div className="bg-gradient-to-br from-blue-600 to-purple-700 p-[1px] rounded-2xl shadow-2xl w-96 transform hover:scale-105 transition-all duration-300">
+          <div className="bg-blue-400 p-[1px] rounded-2xl shadow-2xl w-96 transform hover:scale-105 transition-all duration-300">
             <div className="bg-white p-8 rounded-2xl h-full">
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-2xl animate-bounce">🤖</span>
@@ -51,8 +51,8 @@ export default function AdvancedFunctions() {
               </div>
               <p className="text-2xl font-bold mt-2 text-gray-800">Need Help?</p>
               <p className="text-gray-600 mt-2">Get instant help with challenging concepts and problem-solving.</p>
-              <Button className="mt-6 w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                Ask AI
+              <Button className="mt-6 w-full bg-blue-400 hover:bg-blue-300 text-lg py-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+                💬 Ask AI
               </Button>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default function AdvancedFunctions() {
 
             <div className="mt-8">
               <Link href="/quiz/advancedfunctions/questions">
-                <Button size="lg" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-xl py-8 rounded-xl shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+                <Button size="lg" className="w-full bg-green-400 hover:bg-green-300 text-xl py-8 rounded-xl shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                   Begin Your Learning Journey
                 </Button>
               </Link>
