@@ -1,0 +1,53 @@
+[
+    {
+      "question_number": 1,
+      "question": "Solve for x: 3^x = 81",
+      "user_response": "4"
+    },
+    {
+      "question_number": 2,
+      "question": "Simplify: log(1000) - log(10)",
+      "user_response": "3"
+    },
+    {
+      "question_number": 3,
+      "question": "Convert 90° to radians.",
+      "user_response": "π/2"
+    },
+    {
+      "question_number": 4,
+      "question": "Determine the exact value: sin(π/4) * cos(π/4)",
+      "user_response": "1/2"
+    },
+    {
+      "question_number": 5,
+      "question": "State the vertical asymptote of: f(x) = 1 / (x^2 - 9)",
+      "user_response": "x = ±2"
+    },
+    {
+      "question_number": 6,
+      "question": "Given f(x) = (x - 2)(x + 1)(x - 5), list all x-intercepts.",
+      "user_response": "-1, 2, 5"
+    },
+    {
+      "question_number": 7,
+      "question": "Given f(x) = x^2 + 2x, find the average rate of change from x = 1 to x = 4.",
+      "user_response": "6"
+    },
+    {
+      "question_number": 8,
+      "question": "What is the vertical stretch factor of the function: f(x) = 3sin(x)",
+      "user_response": "3"
+    },
+    {
+      "question_number": 9,
+      "question": "Solve for x: log(5x + 6) = 2",
+      "user_response": "12"
+    },
+    {
+      "question_number": 10,
+      "question": "If f(x) = x^2 and g(x) = 2x + 3, find f(g(1)).",
+      "user_response": "25"
+    }
+  ]
+  
