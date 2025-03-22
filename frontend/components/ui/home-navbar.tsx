@@ -13,11 +13,12 @@ export default function HomeNavbar() {
           </Link>
         </div>
         <div className="flex items-center gap-4">
-          My Account
+          Logged in as User
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
+          <Button variant="outline">My Account</Button>
         </div>
       </div>
     </header>
