@@ -32,7 +32,6 @@ path = 'samplequiz.json'
 with open(path, 'r') as f:
         sample_data = json.load(f)
         
-rag_path = 'Advanced-Functions.pdf'
 
 @quiz_router.post("/answers", response_model=models.RequestID)
 async def post_answers(
@@ -57,32 +56,39 @@ async def post_answers(
         tmp.write(content)
         pdf_path = tmp.name
     
-    
-    if language == "english":
-        weaknesses = quiz.get_weaknesses(quiz_answers)
-        strengths = quiz.get_strengths(quiz_answers)
-        
-        retriever = quiz.rag_setup(pdf_path)
-        
-        strengths_rag = quiz.strength_rag(retriever, strengths)
-        learning_path = quiz.learning_path(retriever, weaknesses)
-        
-        output = {"strengths": strengths_rag,"learning_path": learning_path}
-        
+    try:
+        if language == "english":
+            weaknesses = quiz.get_weaknesses(quiz_answers)
+            strengths = quiz.get_strengths(quiz_answers)
+            
+            retriever = quiz.rag_setup(pdf_path)
+            
+            strengths_rag = quiz.strength_rag(retriever, strengths)
+            learning_path = quiz.learning_path(retriever, weaknesses)
+            
+            resources = quiz.get_videos(learning_path)
+            
+            output = {"strengths": strengths_rag,"learning_path": learning_path, "resources": resources}
+            
 
-    
-    elif language == "french":
-        weaknesses = quiz.get_weaknesses(quiz_answers)
-        strengths = quiz.get_strengths(quiz_answers)
         
-        retriever = quiz.rag_setup(rag_path)
+        elif language == "french":
+            weaknesses = quiz.get_weaknesses(quiz_answers)
+            strengths = quiz.get_strengths(quiz_answers)
+            
+            retriever = quiz.rag_setup(pdf_path)
+            
+            strengths_rag = quiz.strength_rag(retriever, strengths)
+            learning_path = quiz.learning_path(retriever, weaknesses)
+            translated_strengths = quiz.trans_strength(strengths_rag)
+            translated_weaknesses = quiz.trans_weakness(learning_path)
+            resources = quiz.get_videos(learning_path)
+            
+            output = {"strengths": translated_strengths,"learning_path": translated_weaknesses, "resources": resources}
         
-        strengths_rag = quiz.strength_rag(retriever, strengths)
-        learning_path = quiz.learning_path(retriever, weaknesses)
-        translated_strengths = quiz.trans_strength(strengths_rag)
-        translated_weaknesses = quiz.trans_weakness(learning_path)
+    except Exception as e:
+        logging.error(f"An error occurred: {str(e)}")
         
-        output = {"strengths": translated_strengths,"learning_path": translated_weaknesses}
         
     
     schema.request_results[request_id] = output  
