@@ -14,7 +14,7 @@ This project is a next-generation educational agentic system that:
 - ✅ Creates personalized learning paths using students' quiz responses  
 - 🔍 Uses a **RAG pipeline** powered by self-hosted LLMs to pull knowledge from curriculum PDFs  
 - 🔗 Fetches **real, trustworthy learning resources** (like Khan Academy & YouTube) using live search  
-- 🌐 Offers **multi-language support** with translation capabilities (e.g., English and French)  
+- 🌐 Offers **multi-language support** with translation capabilities (e.g., English and other languages)  
 - 💻 Includes a **Next.js web app** frontend with a rich, interactive experience  
 - 📊 Provides a **live dashboard** showing energy usage, carbon savings, and cost comparisons
 
@@ -33,7 +33,7 @@ Traditional cloud-based LLMs contribute to high energy consumption and carbon em
 
 ## 🧠 Agentic Workflow Summary
 
-1. **Student takes a quiz** (in English or French)  
+1. **Student takes a quiz** (in English or a variety of other languages)  
 2. **PDF curriculum** is uploaded  
 3. Self-hosted LLMs:
    - Identify **student strengths** and **weaknesses**
@@ -97,4 +97,15 @@ SERPAPI_API_KEY=your_key_here
 
 # 4. Run FastAPI backend
 uvicorn main:app --reload
+
+```
+---
+
+## 💡 Future Plans
+
+- ✅ Add voice support for accessibility  
+- 📈 Integrate student progress tracking  
+- 🧩 Plugin system for STEM subjects   
+- 🧠 Hugging Face-compatible deployment options  
+
 
