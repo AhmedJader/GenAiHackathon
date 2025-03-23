@@ -7,10 +7,10 @@ import { Input } from "@/components/ui/input";
 
 export default function AdvancedFunctionsQuestions() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [userInput, setUserInput] = useState("");
-  const [requestId, setRequestId] = useState<string | null>(null);
+  const [answers, setAnswers] = useState<string[]>(Array(10).fill("")); // Store all answers
   const [loading, setLoading] = useState(false);
-  
+  const [requestId, setRequestId] = useState<string | null>(null);
+
   const assessmentInfo = [
     "Solve for x: 3^x = 81",
     "Simplify: log(1000) - log(10)",
@@ -25,38 +25,42 @@ export default function AdvancedFunctionsQuestions() {
   ];
 
   const handleNext = () => {
+    if (!answers[currentQuestion].trim()) return; // Prevent moving forward if input is empty
     if (currentQuestion < assessmentInfo.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      setUserInput(""); // Reset input for next question
-      setRequestId(null); // Clear previous request ID
     }
   };
 
-  const handlePrevious = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion] = e.target.value;
+    setAnswers(newAnswers);
   };
 
   const handleSubmit = async () => {
-    if (!userInput.trim()) return;
-
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/answers", {
+      const testAnswers = [];
+      const language = "english";
+
+      for (let i = 0; i < assessmentInfo.length; i++) {
+        testAnswers.push({ question_number: i, question_response: answers[i] });
+      }
+
+      const response = await fetch("http://localhost:8000/quiz/answers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify([{ question: assessmentInfo[currentQuestion], answer: userInput }]),
+        body: JSON.stringify(`{test_answers: ${testAnswers}, language: ${language}}`),
       });
 
       if (response.ok) {
         const data = await response.json();
         setRequestId(data.request_id);
       } else {
-        console.error("Failed to submit answer");
+        console.error("Failed to submit answers");
       }
     } catch (error) {
-      console.error("Error submitting answer:", error);
+      console.error("Error submitting answers:", error);
     } finally {
       setLoading(false);
     }
@@ -67,12 +71,30 @@ export default function AdvancedFunctionsQuestions() {
       {/* Sidebar */}
       <aside className="w-1/5 bg-[#1E1E1E] p-6 border-r border-gray-700">
         <h2 className="text-lg font-semibold text-gray-200">Advanced Functions Assessment</h2>
-        <ul className="mt-4 text-sm text-gray-400 space-y-2">
-          <li>Question {currentQuestion + 1}: {assessmentInfo[currentQuestion]}</li>
-        </ul>
+
+        <div className="mt-4 text-sm text-gray-400">
+          <p>Question {currentQuestion + 1}: {assessmentInfo[currentQuestion]}</p>
+        </div>
+
         <div className="mt-6">
           <h3 className="text-md font-semibold text-gray-200">Progress</h3>
           <p className="text-sm text-gray-400">Question {currentQuestion + 1} / {assessmentInfo.length}</p>
+        </div>
+
+        {/* Display stored answers */}
+        <div className="mt-6">
+          <h3 className="text-md font-semibold text-gray-200">Your Answers</h3>
+          <ul className="mt-2 space-y-2 text-sm text-gray-400">
+            {answers.map((answer, index) => (
+              answer.trim() && (
+                <li key={index} className="border-b border-gray-600 pb-1">
+                  <span className="text-blue-400">Q{index + 1}:</span> {assessmentInfo[index]}
+                  <br />
+                  <span className="text-green-400">A:</span> {answer}
+                </li>
+              )
+            ))}
+          </ul>
         </div>
       </aside>
 
@@ -91,25 +113,16 @@ export default function AdvancedFunctionsQuestions() {
               {/* User Input */}
               <Input
                 type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
+                value={answers[currentQuestion]}
+                onChange={handleInputChange}
                 placeholder="Type your answer here..."
                 className="mt-4 p-3 w-full bg-[#252525] text-white border border-gray-600 rounded-lg"
               />
 
-              {/* Submit Button */}
-              <Button 
-                onClick={handleSubmit} 
-                disabled={loading} 
-                className="bg-green-600 hover:bg-green-500 text-white px-6 py-2 mt-4 rounded-lg transition"
-              >
-                {loading ? "Submitting..." : "Submit Answer"}
-              </Button>
-
               {/* Display request ID if available */}
               {requestId && (
                 <p className="mt-3 text-sm text-gray-400">
-                  Answer submitted! Request ID: <span className="text-green-400">{requestId}</span>
+                  Answers submitted! Request ID: <span className="text-green-400">{requestId}</span>
                 </p>
               )}
 
@@ -118,20 +131,22 @@ export default function AdvancedFunctionsQuestions() {
                 <p className="text-sm text-gray-500">
                   Question {currentQuestion + 1} / {assessmentInfo.length}
                 </p>
-                <Button 
-                  onClick={handlePrevious} 
-                  disabled={currentQuestion === 0}
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition disabled:opacity-50"
-                >
-                  ← Previous Question
-                </Button>
-                <Button 
-                  onClick={handleNext} 
-                  disabled={currentQuestion === assessmentInfo.length - 1}
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition disabled:opacity-50"
-                >
-                  Next Question →
-                </Button>
+                {currentQuestion < assessmentInfo.length - 1 ? (
+                  <Button
+                    onClick={handleNext}
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition"
+                  >
+                    Next Question →
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className="bg-green-600 hover:bg-green-500 text-white px-6 py-2 rounded-lg transition"
+                  >
+                    {loading ? "Submitting..." : "Submit Answers"}
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>
