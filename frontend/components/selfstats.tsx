@@ -38,13 +38,13 @@ export default function SelfHostedPower() {
         🔋 Self-Hosted Rag Pipeline Power Usage
       </h2>
 
-      <p className="text-4xl font-semibold mt-2">{powerUsed.toFixed(6)} kWh</p>
+      <p className="text-4xl font-semibold text-green-500 mt-2">{powerUsed.toFixed(6)} kWh</p>
       <span className="text-sm text-gray-400">
         Estimated power consumption in real time
       </span>
 
       <h2 className="text-2xl font-bold mt-4">💰 Ontario Cost</h2>
-      <p className="text-4xl font-semibold mt-2">
+      <p className="text-4xl text-green-500 font-semibold mt-2">
         ${costIncurred.toFixed(6)} CAD
       </p>
       <span className="text-sm text-gray-400">
@@ -52,7 +52,7 @@ export default function SelfHostedPower() {
       </span>
 
       <h2 className="text-2xl font-bold mt-4">🌎 CO₂ Emissions</h2>
-      <p className="text-4xl font-semibold mt-2">
+      <p className="text-4xl text-green-500 font-semibold mt-2">
         {co2Emissions.toFixed(6)} kg CO₂
       </p>
       <span className="text-sm text-gray-400">

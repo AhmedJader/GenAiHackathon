@@ -47,20 +47,14 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 animate-fade-down">
+    <main className="min-h-screen  animate-fade-down">
       {/* Hero Section */}
       <div className="relative h-[50vh] w-full overflow-hidden">
-        <Image
-          className="object-cover object-center transform scale-105 hover:scale-110 transition-transform duration-700"
-          src="/advanced.png"
-          alt="quiz selection"
-          fill
-          priority
-        />
+      <div className="absolute inset-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 backdrop-blur-sm flex items-center px-40">
           <div className="animate-fade-in">
             <h1 className="text-7xl font-bold text-white tracking-tight">
-              Subject Selection
+              Available Subjects
               <p className="text-4xl mt-4 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
                 Choose Your Path
               </p>

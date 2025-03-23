@@ -27,7 +27,7 @@ export default function Home() {
           className="scale-200"
         />
 
-        <h1 className="text-4xl font-bold text-white mb-20">
+        <h1 className="text-4xl font-bold text-white mb-15">
           Your Self-Hosted {" "}
           <span className="gradient-text">
             Agentic Tutor
@@ -49,7 +49,7 @@ export default function Home() {
           </span> {" "} learning system.
         </p>
 
-        <div className="flex gap-4 mt-6">
+        <div className="flex gap-4 mt-5">
           <Button
             size="lg"
             onClick={handleClick}
@@ -71,7 +71,7 @@ export default function Home() {
           alt="IntelliEarth Logo"
           width={500}
           height={500}
-          className="fixed top-145 z-20"
+          className="fixed top-130 z-20"
           />
 
         {/* IntelliEarth Logo and View Image with Radial Blur Effect */}
@@ -81,7 +81,7 @@ export default function Home() {
             alt="IntelliEarth Logo"
             width={1000}
             height={1000}
-            className="mt-10 border-8 border-gray-500 rounded-lg shadow-2xl"
+            className="mt-0 border-8 border-gray-500 rounded-lg shadow-2xl"
           />
 
           {/* Radial Gradient Overlay for Blur Effect at the Bottom of the Image */}
