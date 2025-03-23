@@ -9,7 +9,7 @@ from . import models
 quiz_router = APIRouter()
 
 @quiz_router.post("/answers", response_model=models.RequestID)
-async def post_answers(answers: List[models.TestAnswer]):
+async def post_answers(answers: List[models.TestResponse]):
     # run llm logic using "answers"
     # run other functions
     # make sure everything is non-blocking
