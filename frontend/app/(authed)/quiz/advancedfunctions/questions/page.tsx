@@ -50,7 +50,8 @@ export default function AdvancedFunctionsQuestions() {
       const response = await fetch("http://localhost:8000/quiz/answers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(`{test_answers: ${testAnswers}, language: ${language}}`),
+        body: JSON.stringify({test_answers: 
+          testAnswers, language: language}),
       });
 
       if (response.ok) {
