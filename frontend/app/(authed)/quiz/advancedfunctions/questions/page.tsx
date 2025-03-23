@@ -73,21 +73,32 @@ export default function AdvancedFunctionsQuestions() {
 
         <div className="mt-6">
           <h3 className="text-md font-semibold text-gray-200">Select Language</h3>
-          <Select value={language} onValueChange={setLanguage}>
+          <Select onValueChange={setLanguage} defaultValue="english">
             <SelectTrigger className="mt-2 w-full bg-[#252525] text-white border border-gray-600 rounded-lg">
-              <SelectValue placeholder="Select a language" />
+              <SelectValue placeholder="Language" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="english">English</SelectItem>
               <SelectItem value="french">French</SelectItem>
-              <SelectItem value="english">Mandarin</SelectItem>
-              <SelectItem value="french">German</SelectItem>
-              <SelectItem value="english">Arabic</SelectItem>
-              <SelectItem value="french">Spanish</SelectItem>
-              <SelectItem value="english">Japenese</SelectItem>
-              <SelectItem value="french">Korean</SelectItem>
+              <SelectItem value="mandarin">Mandarin</SelectItem>
+              <SelectItem value="german">German</SelectItem>
+              <SelectItem value="arabic">Arabic</SelectItem>
+              <SelectItem value="spanish">Spanish</SelectItem>
+              <SelectItem value="japanese">Japanese</SelectItem>
+              <SelectItem value="korean">Korean</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-md font-semibold text-gray-200">Previous Answers</h3>
+          <ul className="mt-2 text-sm text-gray-400 space-y-1">
+            {answers.map((answer, index) => (
+              <li key={index} className="truncate">
+                <strong>Q{index + 1}:</strong> {answer || "Not answered"}
+              </li>
+            ))}
+          </ul>
         </div>
       </aside>
 
