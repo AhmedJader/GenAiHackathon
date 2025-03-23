@@ -28,13 +28,13 @@ export default function Home() {
         />
 
         <h1 className="text-4xl font-bold text-white mb-20">
-          Welcome to {" "}
+          Your Self-Hosted {" "}
           <span className="gradient-text">
-            IntelliEarth!
+            Agentic Tutor
           </span>
         </h1>
 
-        <p className="text-md max-w-2xl text-white mt-[-20]">
+        <p className="text-md max-w-2xl text-white mt-[-40]">
           IntelliEarth is an {" "}
           <span className="gradient-text font-semibold animate-pulse">
             Agentic RAG-LLM
@@ -71,7 +71,7 @@ export default function Home() {
           alt="IntelliEarth Logo"
           width={500}
           height={500}
-          className="fixed top-153 z-20"
+          className="fixed top-145 z-20"
           />
 
         {/* IntelliEarth Logo and View Image with Radial Blur Effect */}
