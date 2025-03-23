@@ -69,6 +69,7 @@ async def post_answers(
             resources = quiz.get_videos(learning_path)
             
             output = {"strengths": strengths_rag,"learning_path": learning_path, "resources": resources}
+            logging.info(f'Output: {output}')
             
 
         
@@ -88,6 +89,7 @@ async def post_answers(
         
     except Exception as e:
         logging.error(f"An error occurred: {str(e)}")
+        schema.request_results[request_id] = {"error": "Failed to generate report"}
         
         
     
@@ -97,16 +99,12 @@ async def post_answers(
 
 
     
-
-@quiz_router.get("/answers/{request_id}", response_class=PlainTextResponse)
+@quiz_router.get("/answers/{request_id}", response_class=JSONResponse)
 async def get_answer_by_id(request_id: str):
     res = schema.request_results.get(request_id)
     if res is None:
-        return PlainTextResponse("Not Found", status_code=404)
-    return res
-
-
-
+        return JSONResponse({"error": "Not Found"}, status_code=404)
+    return JSONResponse(res)
 
 
 

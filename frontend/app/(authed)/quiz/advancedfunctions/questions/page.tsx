@@ -55,43 +55,43 @@ export default function AdvancedFunctionsQuestions() {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
-
-    // Simulate an async operation (e.g., form submission)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setLoading(false);
-    router.push("/report"); // Redirect to /report
     if (!file) {
       alert("Please upload your curriculum PDF.");
       return;
     }
-
+  
     setLoading(true);
+  
     try {
       const testAnswers = assessmentInfo.map((_, i) => ({
         question_number: i,
         user_response: answers[i]
       }));
-
+  
       const formData = new FormData();
       formData.append("language", language);
       formData.append("file", file);
       formData.append("test_answers", JSON.stringify(testAnswers));
-
+  
       const response = await fetch("http://localhost:8000/quiz/answers", {
         method: "POST",
         body: formData
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         setRequestId(data.request_id);
+        localStorage.setItem("request_id", data.request_id);
+  
+        // Navigate to /report only after LLM processing is fully done
+        router.push("/report");
       } else {
         console.error("Failed to submit answers");
+        alert("Submission failed. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting answers:", error);
+      alert("An error occurred while submitting your answers.");
     } finally {
       setLoading(false);
     }
