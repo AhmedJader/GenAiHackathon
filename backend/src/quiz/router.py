@@ -264,7 +264,7 @@ class Quiz:
                 if count == 0:
                     markdown += f"- No suitable results found for **{topic}**.\n"
             except Exception as e:
-                markdown += f"- ❌ Could not fetch resources for **{topic}**: {str(e)}\n"
+                markdown += f"- Could not fetch resources for **{topic}**: {str(e)}\n"
         
         logging.info(f"Resources:\n{markdown}")
         return markdown
@@ -273,9 +273,9 @@ class Quiz:
         prompt = f"""
             You are a helpful assistant. Given a list of math topics and their related resources in markdown format, filter out anything that is off-topic or unrelated to learning the subject (e.g. health, finance, etc.).
 
-            ✅ Only keep resources that are **clearly educational** and **about the math topic**.
+            Only keep resources that are **clearly educational** and **about the math topic**.
 
-            🛑 Do NOT change formatting or rewrite titles or links.
+            Do NOT change formatting or rewrite titles or links.
 
             Here is the input markdown:
 
