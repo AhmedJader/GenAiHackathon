@@ -64,7 +64,7 @@ export default function AdvancedFunctionsQuestions() {
   
     try {
       const testAnswers = assessmentInfo.map((_, i) => ({
-        question_number: i,
+        question_number: i + 1,
         user_response: answers[i]
       }));
   

@@ -52,8 +52,13 @@ async def post_answers(
 
     try:
         parsed_answers = json.loads(test_answers)
+        
+        logging.info(f'Sample Data: {sample_data}')
+        logging.info(f'Parsed Answers: {parsed_answers}')  
+        
         quiz_answers = quiz.merge_quiz_with_responses(sample_data, parsed_answers)
 
+        logging.info(f'Quiz Answers: {quiz_answers}')
         # Save PDF temporarily
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
             content = await file.read()
