@@ -83,18 +83,18 @@ This level of **transparency** helps build awareness about the environmental imp
 
 ---
 
-## 🧪 Example API Usage
+## 🚀 Local Setup
 
-```http
-POST /answers
-  - Form:
-    - language: "english" or "french"
-    - test_answers: JSON of quiz responses
-    - file: Curriculum PDF
+```bash
+# 1. Clone repo
+git clone ...
 
-GET /answers/{request_id}
-  - Returns:
-    - Personalized learning path
-    - Strengths summary
-    - Curated resources (in markdown)
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Set up .env file
+SERPAPI_API_KEY=your_key_here
+
+# 4. Run FastAPI backend
+uvicorn main:app --reload
 
