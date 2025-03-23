@@ -5,7 +5,7 @@ import { NAV_LINKS } from "@/lib/constants";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 w-full max-w-3xl z-50 font-semibold rounded-2xl shadow-lg bg-[#0b0c0e] text-white">
+    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 w-full max-w-3xl z-50 font-semibold rounded-2xl shadow-lg bg-neutral-900 text-white">
       <div className="flex justify-between items-center p-4">
         <Link
           href="/"
