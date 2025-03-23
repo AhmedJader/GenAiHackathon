@@ -18,7 +18,7 @@ export default function Home() {
 
       <Nav />
 
-      <div className="animate-fade-down transition-all mt-20 duration-1000 ease-in-out flex flex-col items-center justify-center mx-auto text-center">
+      <div className="animate-fade-down transition-all mt-20 duration-500 ease-in-out flex flex-col items-center justify-center mx-auto text-center">
         <Image
           src="/bruh.webp"
           alt="IntelliEarth Logo"
