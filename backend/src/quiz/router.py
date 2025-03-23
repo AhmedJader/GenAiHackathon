@@ -14,9 +14,11 @@ from typing import List, Dict
 from typing import List
 from fastapi import APIRouter
 from fastapi.responses import PlainTextResponse
+from fastapi.responses import JSONResponse
+from fastapi import UploadFile, File, Form
 from prompts import (prompt_strength, prompt_weakness, 
                      rag_template, trans_template, video_prompt)
-
+import tempfile
 import json
 import os
 import uuid
@@ -35,24 +37,34 @@ with open(path, 'r') as f:
 rag_path = 'Advanced-Functions.pdf'
 
 @quiz_router.post("/answers", response_model=models.RequestID)
-async def post_answers(answers: models.TestResponse):
-    # run llm logic using "answers"
-    # run other functions
-    # make sure everything is non-blocking
+async def post_answers(
+    language: str = Form(...),
+    test_answers: str = Form(...),
+    file: UploadFile = File(...)
+):
+
     
     request_id = str(uuid.uuid4())
     
     quiz = Quiz()
     
-
-    quiz_answers = quiz.merge_quiz_with_responses(sample_data, answers.test_answers)
+    # Parse test_answers string to JSON
+    parsed_answers = json.loads(test_answers)
+    
+    quiz_answers = quiz.merge_quiz_with_responses(sample_data, parsed_answers)
+    
+    # Save PDF temporarily
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+        content = await file.read()
+        tmp.write(content)
+        pdf_path = tmp.name
     
     
-    if answers.language == "english":
+    if language == "english":
         weaknesses = quiz.get_weaknesses(quiz_answers)
         strengths = quiz.get_strengths(quiz_answers)
         
-        retriever = quiz.rag_setup(rag_path)
+        retriever = quiz.rag_setup(pdf_path)
         
         strengths_rag = quiz.strength_rag(retriever, strengths)
         learning_path = quiz.learning_path(retriever, weaknesses)
@@ -61,7 +73,7 @@ async def post_answers(answers: models.TestResponse):
         
 
     
-    elif answers.language == "french":
+    elif language == "french":
         weaknesses = quiz.get_weaknesses(quiz_answers)
         strengths = quiz.get_strengths(quiz_answers)
         
@@ -108,7 +120,7 @@ class Quiz:
 
     def merge_quiz_with_responses(self,quiz_questions: List[Dict], quiz_responses: List[Dict]) -> List[Dict]:
         # First, build a lookup table for responses
-        response_lookup = {resp.question_number: resp.user_response for resp in quiz_responses}
+        response_lookup = {resp["question_number"]: resp["user_response"] for resp in quiz_responses}
         
         merged = []
         for q in quiz_questions:

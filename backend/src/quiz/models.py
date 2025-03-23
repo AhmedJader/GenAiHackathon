@@ -11,4 +11,3 @@ class RequestID(BaseModel):
 class TestResponse(BaseModel):
     test_answers:List[TestAnswer]
     language: str
-    #file_rag: FilePath

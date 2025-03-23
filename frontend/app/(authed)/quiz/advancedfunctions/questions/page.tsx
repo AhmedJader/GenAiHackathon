@@ -18,6 +18,7 @@ export default function AdvancedFunctionsQuestions() {
   const [loading, setLoading] = useState(false);
   const [requestId, setRequestId] = useState<string | null>(null);
   const [language, setLanguage] = useState("english");
+  const [file, setFile] = useState<File | null>(null);
 
   const assessmentInfo = [
     "Solve for x: 3^x = 81",
@@ -45,18 +46,33 @@ export default function AdvancedFunctionsQuestions() {
     setAnswers(newAnswers);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
+
   const handleSubmit = async () => {
+    if (!file) {
+      alert("Please upload your curriculum PDF.");
+      return;
+    }
+
     setLoading(true);
     try {
       const testAnswers = assessmentInfo.map((_, i) => ({
         question_number: i,
-        user_response: answers[i] 
+        user_response: answers[i]
       }));
+
+      const formData = new FormData();
+      formData.append("language", language);
+      formData.append("file", file);
+      formData.append("test_answers", JSON.stringify(testAnswers));
 
       const response = await fetch("http://localhost:8000/quiz/answers", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ test_answers: testAnswers, language })
+        body: formData
       });
 
       if (response.ok) {
@@ -103,6 +119,16 @@ export default function AdvancedFunctionsQuestions() {
               <SelectItem value="korean">Korean</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-md font-semibold text-gray-200">Upload Curriculum PDF</h3>
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={handleFileChange}
+            className="mt-2 w-full text-sm text-white"
+          />
         </div>
 
         <div className="mt-6">
