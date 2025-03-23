@@ -48,7 +48,7 @@ async def post_answers(answers: models.TestResponse):
     quiz_answers = quiz.merge_quiz_with_responses(sample_data, answers.test_answers)
     
     
-    if answers.language == "English":
+    if answers.language == "english":
         weaknesses = quiz.get_weaknesses(quiz_answers)
         strengths = quiz.get_strengths(quiz_answers)
         
@@ -61,7 +61,7 @@ async def post_answers(answers: models.TestResponse):
         
 
     
-    elif answers.language == "French":
+    elif answers.language == "french":
         weaknesses = quiz.get_weaknesses(quiz_answers)
         strengths = quiz.get_strengths(quiz_answers)
         
