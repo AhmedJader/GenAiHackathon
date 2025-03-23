@@ -11,10 +11,13 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from typing import List, Dict
+from serpapi import GoogleSearch
 import os
 from dotenv import load_dotenv
+import requests
 
 load_dotenv()
+serp_api_key = os.getenv("SERPAPI_API_KEY")
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 from vertexai.generative_models import (
@@ -34,7 +37,7 @@ with open(path, 'r') as f:
 with open(path2, 'r') as f:
     sample_answers = json.load(f)
     
-rag_file = "/Users/yusufmoola/Desktop/Code Demo's/GenAiHackathon/backend/Advanced-Functions.pdf"
+rag_file = "Advanced-Functions.pdf"
 
 safety_settings = {
                 HarmCategory.HARM_CATEGORY_UNSPECIFIED: HarmBlockThreshold.BLOCK_ONLY_HIGH,
@@ -170,14 +173,50 @@ class Quiz:
         
         return res_lang
     
-    def get_videos(self, learning_path):
-        
-        video_prompt_final = video_prompt.format(learning_path)
+    def extract_topics(self, learning_path: str) -> List[str]:
+        prompt = f"""
+        Extract the core learning topics from the following text. Return one topic per line:
+        ---
+        {learning_path}
+        """
+        result = self.llm_deepseek.invoke(prompt)
+        result = result.split("<think>")[1].split("</think>")[1]
+        return [line.strip('- ').strip() for line in result.splitlines() if line.strip()]
 
-        res_video = self.llm_deepseek.invoke(video_prompt_final)
-        res_video = res_video.split("<think>")[1].split("</think>")[1]
+    def fetch_real_resources(self, topics: List[str]) -> str:
+        api_key = serp_api_key
+        if not api_key:
+            raise ValueError("SERPAPI_API_KEY not found in environment variables")
+
+        markdown = ""
+        for topic in topics[1:]:
+            markdown += f"### {topic}\n"
+            try:
+                search = GoogleSearch({ 
+                    "q": f"{topic} site:khanacademy.org OR site:youtube.com",
+                    "num": 3,
+                    "api_key": serp_api_key
+                })
+                results = search.get_dict()
+                for result in results.get("organic_results", [])[:3]:
+                    title = result.get("title")
+                    link = result.get("link")
+                    if title and link:
+                        markdown += f"- **Website**: {title}\n  **Link**: {link}\n"
+            except Exception as e:
+                markdown += f"- Could not fetch resources for {topic}: {str(e)}\n"
+        return markdown
+    
+    def refine_resources(self, resources: str) -> str:
+        prompt = f"""
+        You are a helpful assistant. Given a math topic and some search results, filter out only the resources that are **educational and directly related to the topic
+        Refine the following list of resources: {resources}
         
-        return res_video
+        Ignore health or non-math content.
+        """
+        res = self.llm_video.invoke(prompt)
+        logging.info(f"Refined resources: {res}")
+        return res
         
 
 def main(sample_answers):
@@ -192,7 +231,9 @@ def main(sample_answers):
     learning_path = quiz_flow.learning_path(retriever, weakness)
     trans_strength = quiz_flow.trans_strength(strength_rag)
     trans_weakness = quiz_flow.trans_weakness(learning_path)
-    videos = quiz_flow.get_videos(learning_path)
+    topics = quiz_flow.extract_topics(learning_path)
+    resources = quiz_flow.fetch_real_resources(topics)
+    refined = quiz_flow.refine_resources(resources)
 
     print("Weaknesses: ", weakness)
     print('\n\n')
@@ -206,7 +247,7 @@ def main(sample_answers):
     print('\n\n')
     print("Weaknesses Translated: ", trans_weakness)
     print('\n\n')
-    print("Resources: ", videos)
+    print("Resources: ", refined)
  
     
 main(sample_answers)

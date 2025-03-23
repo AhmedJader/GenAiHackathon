@@ -1,5 +1,6 @@
 from langchain_ollama.llms import OllamaLLM
 from langchain_community.document_loaders import PyPDFLoader
+from langchain_google_vertexai import VertexAI
 from langchain.cache import SQLiteCache
 from langchain.globals import set_llm_cache
 from langchain_ollama import OllamaEmbeddings
@@ -13,16 +14,20 @@ from typing import List
 from fastapi import APIRouter
 from fastapi.responses import PlainTextResponse
 from fastapi.responses import JSONResponse
+from serpapi import GoogleSearch
 from fastapi import UploadFile, File, Form
 from prompts import (prompt_strength, prompt_weakness, 
                      rag_template, trans_template, video_prompt)
 import tempfile
 import json
 import os
+from dotenv import load_dotenv
 import uuid
 import schema
 import logging
 from . import models
+
+load_dotenv()
 
 set_llm_cache(SQLiteCache(database_path=".langchain.db"))
 
@@ -39,62 +44,59 @@ async def post_answers(
     test_answers: str = Form(...),
     file: UploadFile = File(...)
 ):
-
-    
     request_id = str(uuid.uuid4())
-    
     quiz = Quiz()
-    
-    # Parse test_answers string to JSON
-    parsed_answers = json.loads(test_answers)
-    
-    quiz_answers = quiz.merge_quiz_with_responses(sample_data, parsed_answers)
-    
-    # Save PDF temporarily
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
-        content = await file.read()
-        tmp.write(content)
-        pdf_path = tmp.name
-    
+    output = {"error": "An unexpected error occurred"}  # fallback default value
+
     try:
+        parsed_answers = json.loads(test_answers)
+        quiz_answers = quiz.merge_quiz_with_responses(sample_data, parsed_answers)
+
+        # Save PDF temporarily
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+            content = await file.read()
+            tmp.write(content)
+            pdf_path = tmp.name
+
         if language == "english":
             weaknesses = quiz.get_weaknesses(quiz_answers)
             strengths = quiz.get_strengths(quiz_answers)
-            
             retriever = quiz.rag_setup(pdf_path)
-            
             strengths_rag = quiz.strength_rag(retriever, strengths)
             learning_path = quiz.learning_path(retriever, weaknesses)
-            
-            resources = quiz.get_videos(learning_path)
-            
-            output = {"strengths": strengths_rag,"learning_path": learning_path, "resources": resources}
-            logging.info(f'Output: {output}')
-            
+            topics = quiz.extract_topics(learning_path)
+            resources = quiz.fetch_real_resources(topics)
+            refined = quiz.refine_resources(resources)
+            output = {
+                "strengths": strengths_rag,
+                "learning_path": learning_path,
+                "resources": refined
+            }
 
-        
         elif language == "french":
             weaknesses = quiz.get_weaknesses(quiz_answers)
             strengths = quiz.get_strengths(quiz_answers)
-            
             retriever = quiz.rag_setup(pdf_path)
-            
             strengths_rag = quiz.strength_rag(retriever, strengths)
             learning_path = quiz.learning_path(retriever, weaknesses)
             translated_strengths = quiz.trans_strength(strengths_rag)
             translated_weaknesses = quiz.trans_weakness(learning_path)
-            resources = quiz.get_videos(learning_path)
-            
-            output = {"strengths": translated_strengths,"learning_path": translated_weaknesses, "resources": resources}
-        
+            topics = quiz.extract_topics(learning_path)
+            resources = quiz.fetch_real_resources(topics)
+            refined = quiz.refine_resources(resources)
+            output = {
+                "strengths": translated_strengths,
+                "learning_path": translated_weaknesses,
+                "resources": refined
+            }
+
     except Exception as e:
         logging.error(f"An error occurred: {str(e)}")
-        schema.request_results[request_id] = {"error": "Failed to generate report"}
-        
-        
-    
-    schema.request_results[request_id] = output  
+        output = {"error": "Failed to generate report"}
+
+    schema.request_results[request_id] = output
     return models.RequestID(request_id=request_id)
+
         
 
 
@@ -114,6 +116,7 @@ class Quiz:
         self.llm_mathstral = OllamaLLM(model= "mathstral:latest", temperature=0.3)
         self.llm_rag = OllamaLLM(model="gemma", temperature=0.4)
         self.llm_lang = OllamaLLM(model = "stablelm2", temperature= 0)
+        self.llm_video = LLM().llm
         self.llm_deepseek = OllamaLLM(model = "deepseek-r1", temperature= 0.2)
         
     def merge_quiz_with_responses(self,quiz_questions: List[Dict], quiz_responses: List[Dict]) -> List[Dict]:
@@ -219,3 +222,62 @@ class Quiz:
         res_video = res_video.split("<think>")[1].split("</think>")[1]
         
         return res_video
+    
+    def extract_topics(self, learning_path: str) -> List[str]:
+        prompt = f"""
+        Extract the core learning topics from the following text. Return one topic per line:
+        ---
+        {learning_path}
+        """
+        result = self.llm_deepseek.invoke(prompt)
+        result = result.split("<think>")[1].split("</think>")[1]
+        return [line.strip('- ').strip() for line in result.splitlines() if line.strip()]
+
+    def fetch_real_resources(self, topics: List[str]) -> str:
+        api_key = os.getenv("SERPAPI_API_KEY")
+        if not api_key:
+            raise ValueError("SERPAPI_API_KEY not found in environment variables")
+
+        markdown = ""
+        for topic in topics[1:]:
+            markdown += f"### {topic}\n"
+            try:
+                search = GoogleSearch({ 
+                    "q": f"{topic} site:khanacademy.org OR site:youtube.com",
+                    "num": 3,
+                    "api_key": api_key
+                })
+                results = search.get_dict()
+                for result in results.get("organic_results", [])[:3]:
+                    title = result.get("title")
+                    link = result.get("link")
+                    if title and link:
+                        markdown += f"- **Website**: {title}\n  **Link**: {link}\n"
+            except Exception as e:
+                markdown += f"- Could not fetch resources for {topic}: {str(e)}\n"
+        logging.info(f"Resources: {markdown}")
+        return markdown
+    
+    def refine_resources(self, resources: str) -> str:
+        prompt = f"""
+        You are a helpful assistant. Given some math topic and some search results, Include only the resources that you believe **educational and directly related to the topic
+        Refine the following list of resources: {resources}
+        
+        Output the results in the same format as the input.
+        
+        Ignore health or non-math content.
+        """
+        res = self.llm_video.invoke(prompt)
+        logging.info(f"Refined resources: {res}")
+        return res
+    
+    
+class LLM:
+    def __init__(self):
+        self.llm = VertexAI(
+            model_name="gemini-1.5-pro-001",
+            temperature=.4,
+            top_p=0.8,
+            top_k=40,
+            max_output_tokens=4096,
+            verbose=True)
