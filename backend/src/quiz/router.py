@@ -59,11 +59,9 @@ async def post_answers(answers: models.TestResponse):
         
         output = {"strengths": strengths_rag,"learning_path": learning_path}
         
-        schema.request_results[request_id] = output  
 
-        return models.RequestID(request_id=request_id)
     
-    if answers.language == "French":
+    elif answers.language == "French":
         weaknesses = quiz.get_weaknesses(quiz_answers)
         strengths = quiz.get_strengths(quiz_answers)
         
@@ -76,9 +74,9 @@ async def post_answers(answers: models.TestResponse):
         
         output = {"strengths": translated_strengths,"learning_path": translated_weaknesses}
         
-        schema.request_results[request_id] = output
-        
-        return models.RequestID(request_id=request_id)
+    
+    schema.request_results[request_id] = output  
+    return models.RequestID(request_id=request_id)
         
 
 

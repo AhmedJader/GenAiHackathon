@@ -21,7 +21,7 @@ export default function AdvancedFunctionsQuestions() {
     "Given f(x) = x^2 + 2x, find the average rate of change from x = 1 to x = 4.",
     "What is the vertical stretch factor of the function: f(x) = 3sin(x)",
     "Solve for x: log(5x + 6) = 2",
-    "If f(x) = x^2 and g(x) = 2x + 3, find f(g(1))."
+    "If f(x) = x^2 and g(x) = 2x + 3, find f(g(1)).",
   ];
 
   const handleNext = () => {
@@ -44,14 +44,13 @@ export default function AdvancedFunctionsQuestions() {
       const language = "english";
 
       for (let i = 0; i < assessmentInfo.length; i++) {
-        testAnswers.push({ question_number: i, question_response: answers[i] });
+        testAnswers.push({ question_number: i, user_response: answers[i] });
       }
 
       const response = await fetch("http://localhost:8000/quiz/answers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({test_answers: 
-          testAnswers, language: language}),
+        body: JSON.stringify({ test_answers: testAnswers, language: language }),
       });
 
       if (response.ok) {
@@ -71,30 +70,38 @@ export default function AdvancedFunctionsQuestions() {
     <main className="min-h-screen flex bg-[#121212] text-white animate-fade-down transition-all duration-300 ease-in-out">
       {/* Sidebar */}
       <aside className="w-1/5 bg-[#1E1E1E] p-6 border-r border-gray-700">
-        <h2 className="text-lg font-semibold text-gray-200">Advanced Functions Assessment</h2>
+        <h2 className="text-lg font-semibold text-gray-200">
+          Advanced Functions Assessment
+        </h2>
 
         <div className="mt-4 text-sm text-gray-400">
-          <p>Question {currentQuestion + 1}: {assessmentInfo[currentQuestion]}</p>
+          <p>
+            Question {currentQuestion + 1}: {assessmentInfo[currentQuestion]}
+          </p>
         </div>
 
         <div className="mt-6">
           <h3 className="text-md font-semibold text-gray-200">Progress</h3>
-          <p className="text-sm text-gray-400">Question {currentQuestion + 1} / {assessmentInfo.length}</p>
+          <p className="text-sm text-gray-400">
+            Question {currentQuestion + 1} / {assessmentInfo.length}
+          </p>
         </div>
 
         {/* Display stored answers */}
         <div className="mt-6">
           <h3 className="text-md font-semibold text-gray-200">Your Answers</h3>
           <ul className="mt-2 space-y-2 text-sm text-gray-400">
-            {answers.map((answer, index) => (
-              answer.trim() && (
-                <li key={index} className="border-b border-gray-600 pb-1">
-                  <span className="text-blue-400">Q{index + 1}:</span> {assessmentInfo[index]}
-                  <br />
-                  <span className="text-green-400">A:</span> {answer}
-                </li>
-              )
-            ))}
+            {answers.map(
+              (answer, index) =>
+                answer.trim() && (
+                  <li key={index} className="border-b border-gray-600 pb-1">
+                    <span className="text-blue-400">Q{index + 1}:</span>{" "}
+                    {assessmentInfo[index]}
+                    <br />
+                    <span className="text-green-400">A:</span> {answer}
+                  </li>
+                )
+            )}
           </ul>
         </div>
       </aside>
@@ -109,7 +116,9 @@ export default function AdvancedFunctionsQuestions() {
               </CardTitle>
             </CardHeader>
             <CardContent className="text-center">
-              <p className="text-lg text-gray-300">{assessmentInfo[currentQuestion]}</p>
+              <p className="text-lg text-gray-300">
+                {assessmentInfo[currentQuestion]}
+              </p>
 
               {/* User Input */}
               <Input
@@ -123,7 +132,8 @@ export default function AdvancedFunctionsQuestions() {
               {/* Display request ID if available */}
               {requestId && (
                 <p className="mt-3 text-sm text-gray-400">
-                  Answers submitted! Request ID: <span className="text-green-400">{requestId}</span>
+                  Answers submitted! Request ID:{" "}
+                  <span className="text-green-400">{requestId}</span>
                 </p>
               )}
 
