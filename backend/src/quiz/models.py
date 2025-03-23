@@ -7,3 +7,7 @@ class TestAnswer(BaseModel):
 
 class RequestID(BaseModel):
     request_id: str
+    
+class TestResponse(BaseModel):
+    test_answers:List[TestAnswer]
+    language: str
