@@ -38,19 +38,23 @@ export default function ReportPage() {
 
   return (
     <main className="min-h-screen bg-[#121212] text-white p-10 space-y-10">
-      <section>
-        <h2 className="text-2xl font-bold mb-4 text-green-400">📘 Personalized Learning Path</h2>
-        <div className="bg-[#1E1E1E] p-6 rounded-lg border border-gray-700 prose prose-invert max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{learningPath}</ReactMarkdown>
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-bold mb-4 text-blue-400">🎥 Suggested Resources</h2>
-        <div className="bg-[#1E1E1E] p-6 rounded-lg border border-gray-700 prose prose-invert max-w-none">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{resources}</ReactMarkdown>
-        </div>
-      </section>
-    </main>
+    <section>
+      <h2 className="text-2xl font-bold mb-4 text-green-400">📘 Personalized Learning Path</h2>
+      <div className="bg-[#1E1E1E] p-6 rounded-lg border border-gray-700 prose prose-invert max-w-none">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {learningPath}
+        </ReactMarkdown>
+      </div>
+    </section>
+  
+    <section>
+      <h2 className="text-2xl font-bold mb-4 text-blue-400">🎥 Suggested Resources</h2>
+      <div className="bg-[#1E1E1E] p-6 rounded-lg border border-gray-700 prose prose-invert max-w-none">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {resources}
+        </ReactMarkdown>
+      </div>
+    </section>
+  </main>
   );
 }

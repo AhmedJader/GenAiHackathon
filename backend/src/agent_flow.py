@@ -184,36 +184,53 @@ class Quiz:
         return [line.strip('- ').strip() for line in result.splitlines() if line.strip()]
 
     def fetch_real_resources(self, topics: List[str]) -> str:
-        api_key = serp_api_key
+        api_key = os.getenv("SERPAPI_API_KEY")
         if not api_key:
             raise ValueError("SERPAPI_API_KEY not found in environment variables")
 
         markdown = ""
-        for topic in topics[1:]:
-            markdown += f"### {topic}\n"
+        for topic in topics[1:]:  # [1:] if you want to skip the first topic intentionally
+            markdown += f"\n---\n\n"  # horizontal rule between topics
+            markdown += f"### {topic}\n\n"
+            markdown += "**Recommended Resources:**\n\n"
             try:
                 search = GoogleSearch({ 
                     "q": f"{topic} site:khanacademy.org OR site:youtube.com",
                     "num": 3,
-                    "api_key": serp_api_key
+                    "api_key": api_key
                 })
                 results = search.get_dict()
-                for result in results.get("organic_results", [])[:3]:
+                count = 0
+                for result in results.get("organic_results", []):
                     title = result.get("title")
                     link = result.get("link")
                     if title and link:
-                        markdown += f"- **Website**: {title}\n  **Link**: {link}\n"
+                        markdown += f"- [{title}]({link})\n"
+                        count += 1
+                    if count >= 3:
+                        break
+                if count == 0:
+                    markdown += f"- No suitable results found for **{topic}**.\n"
             except Exception as e:
-                markdown += f"- Could not fetch resources for {topic}: {str(e)}\n"
+                markdown += f"- ❌ Could not fetch resources for **{topic}**: {str(e)}\n"
+        
+        logging.info(f"Resources:\n{markdown}")
         return markdown
     
     def refine_resources(self, resources: str) -> str:
         prompt = f"""
-        You are a helpful assistant. Given a math topic and some search results, filter out only the resources that are **educational and directly related to the topic
-        Refine the following list of resources: {resources}
-        
-        Ignore health or non-math content.
-        """
+            You are a helpful assistant. Given a list of math topics and their related resources in markdown format, filter out anything that is off-topic or unrelated to learning the subject (e.g. health, finance, etc.).
+
+            ✅ Only keep resources that are **clearly educational** and **about the math topic**.
+
+            🛑 Do NOT change formatting or rewrite titles or links.
+
+            Here is the input markdown:
+
+            {resources}
+
+            Return the cleaned markdown exactly.
+            """
         res = self.llm_video.invoke(prompt)
         logging.info(f"Refined resources: {res}")
         return res
