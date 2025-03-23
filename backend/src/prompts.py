@@ -157,32 +157,6 @@ Here is the input:
 
 """
 
-"""
-video_prompt = ''' 
-
-You are an agent that takes in a student learning path and recommended videos to watch based 
-on the topics they need improved on. Only include khan academy videos
-
-Please return for a each topic a few video recommendations.
-
-Each recommendation should be in the following format:
-
-Video: (video title)
-Link: (video link)
-
-Here is the student learning path:
-
-{}
-
-## Output Structure:
-- DO NOT DISPLAY PYTHONCODE
-- DO NOT DISPLAY JSON
-- DO NOT WRAP ANSWER IN (''' ''')
-
-
-'''
-
-"""
 
 video_prompt = ''' 
 
