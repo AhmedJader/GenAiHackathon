@@ -809,3 +809,7 @@ INFO:root:Learning Path summary RAG: ## Learning Path for Student Improvement:
 * Regularly review progress and adjust the learning path as needed
 * Encourage the student to self-assess and track their progress
 * Seek feedback from teachers or tutors to gain additional insights
+WARNING:python_multipart.multipart:Skipping data after last boundary
+INFO:httpx:HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 404 Not Found"
+WARNING:python_multipart.multipart:Skipping data after last boundary
+INFO:httpx:HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 500 Internal Server Error"
