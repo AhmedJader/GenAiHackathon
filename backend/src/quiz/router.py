@@ -1,6 +1,4 @@
 from langchain_ollama.llms import OllamaLLM
-from langchain_google_vertexai import VertexAI
-from langchain_openai import ChatOpenAI
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.cache import SQLiteCache
 from langchain.globals import set_llm_cache
@@ -113,11 +111,7 @@ class Quiz:
         self.llm_rag = OllamaLLM(model="gemma", temperature=0.4)
         self.llm_lang = OllamaLLM(model = "stablelm2", temperature= 0)
         self.llm_deepseek = OllamaLLM(model = "deepseek-r1", temperature= 0.2)
-        #self.llm_openai = ChatOpenAI(model="gpt-4o", temperature=0.2, api_key= openai_api_key)
-        #self.llm_video = LLM().llm
         
-    
-
     def merge_quiz_with_responses(self,quiz_questions: List[Dict], quiz_responses: List[Dict]) -> List[Dict]:
         # First, build a lookup table for responses
         response_lookup = {resp["question_number"]: resp["user_response"] for resp in quiz_responses}
