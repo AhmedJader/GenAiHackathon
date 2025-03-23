@@ -104,5 +104,5 @@ html {
 }
 
 .animate-fade-down {
-  animation: fade-down 0.5s ease-out forwards;
+  animation: fade-down 1s ease-in-out forwards;
 }
