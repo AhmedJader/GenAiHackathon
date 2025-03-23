@@ -47,30 +47,28 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen  animate-fade-down">
+    <main className="min-h-screen bg-neutral-900 text-white">
       {/* Hero Section */}
-      <div className="relative h-[50vh] w-full overflow-hidden">
-      <div className="absolute inset-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 backdrop-blur-sm flex items-center px-40">
-          <div className="animate-fade-in">
-            <h1 className="text-7xl font-bold text-white tracking-tight">
+      <div className="relative w-full overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.4),rgba(255,255,255,0))]"></div>
+          <div className="">
+            <h1 className="text-7xl mt-25 font-bold tracking-tight text-center">
               Available Subjects
-              <p className="text-4xl mt-4 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
+              <p className="text-4xl mt-2 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
                 Choose Your Path
               </p>
             </h1>
           </div>
         </div>
-      </div>
 
       {/* Subject Cards */}
-      <div className="container mx-auto px-8 py-16">
+      <div className="container mx-auto py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {subjects.map((subject) => (
             <div
               key={subject.name}
               onClick={() => setSelectedSubject(subject.name)}
-              className={`bg-white/95 p-8 rounded-2xl shadow-xl backdrop-blur-md hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:scale-105 ${
+              className={`bg-white/95 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:scale-105 ${
                 selectedSubject === subject.name ? "ring-4 ring-blue-400" : ""
               }`}
             >
