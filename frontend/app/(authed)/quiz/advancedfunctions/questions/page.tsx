@@ -4,7 +4,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 
 export default function AdvancedFunctionsQuestions() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -42,11 +48,15 @@ export default function AdvancedFunctionsQuestions() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const testAnswers = assessmentInfo.map((_, i) => ({ question_number: i, question_response: answers[i] }));
+      const testAnswers = assessmentInfo.map((_, i) => ({
+        question_number: i,
+        user_response: answers[i] 
+      }));
+
       const response = await fetch("http://localhost:8000/quiz/answers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ test_answers: testAnswers, language, file_rag: "sdfsdf" }),
+        body: JSON.stringify({ test_answers: testAnswers, language })
       });
 
       if (response.ok) {
@@ -64,11 +74,16 @@ export default function AdvancedFunctionsQuestions() {
 
   return (
     <main className="min-h-screen flex bg-[#121212] text-white animate-fade-down transition-all duration-300 ease-in-out">
+      {/* Sidebar */}
       <aside className="w-1/5 bg-[#1E1E1E] p-6 border-r border-gray-700">
-        <h2 className="text-lg font-semibold text-gray-200">Advanced Functions Assessment</h2>
+        <h2 className="text-lg font-semibold text-gray-200">
+          Advanced Functions Assessment
+        </h2>
 
         <div className="mt-4 text-sm text-gray-400">
-          <p>Question {currentQuestion + 1}: {assessmentInfo[currentQuestion]}</p>
+          <p>
+            Question {currentQuestion + 1}: {assessmentInfo[currentQuestion]}
+          </p>
         </div>
 
         <div className="mt-6">
@@ -102,6 +117,7 @@ export default function AdvancedFunctionsQuestions() {
         </div>
       </aside>
 
+      {/* Main Content */}
       <div className="flex-1 flex items-center justify-center px-6">
         <div className="max-w-2xl w-full">
           <Card className="bg-[#1E1E1E] border border-gray-700 shadow-lg rounded-xl">
@@ -111,7 +127,9 @@ export default function AdvancedFunctionsQuestions() {
               </CardTitle>
             </CardHeader>
             <CardContent className="text-center">
-              <p className="text-lg text-gray-300">{assessmentInfo[currentQuestion]}</p>
+              <p className="text-lg text-gray-300">
+                {assessmentInfo[currentQuestion]}
+              </p>
 
               <Input
                 type="text"
@@ -123,7 +141,8 @@ export default function AdvancedFunctionsQuestions() {
 
               {requestId && (
                 <p className="mt-3 text-sm text-gray-400">
-                  Answers submitted! Request ID: <span className="text-green-400">{requestId}</span>
+                  Answers submitted! Request ID:{" "}
+                  <span className="text-green-400">{requestId}</span>
                 </p>
               )}
 
@@ -132,11 +151,18 @@ export default function AdvancedFunctionsQuestions() {
                   Question {currentQuestion + 1} / {assessmentInfo.length}
                 </p>
                 {currentQuestion < assessmentInfo.length - 1 ? (
-                  <Button onClick={handleNext} className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition">
+                  <Button
+                    onClick={handleNext}
+                    className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition"
+                  >
                     Next Question →
                   </Button>
                 ) : (
-                  <Button onClick={handleSubmit} disabled={loading} className="bg-green-600 hover:bg-green-500 text-white px-6 py-2 rounded-lg transition">
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className="bg-green-600 hover:bg-green-500 text-white px-6 py-2 rounded-lg transition"
+                  >
                     {loading ? "Submitting..." : "Submit Answers"}
                   </Button>
                 )}
