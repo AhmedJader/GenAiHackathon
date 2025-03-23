@@ -4,7 +4,20 @@ from videos.router import videos_router
 
 import logging
 
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
+
 app = FastAPI()
+
+# Allow requests from your frontend (Next.js running on localhost:3000)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],# Or ["*"] for testing
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 logging.basicConfig(filename='app.log', level=logging.INFO)
 
