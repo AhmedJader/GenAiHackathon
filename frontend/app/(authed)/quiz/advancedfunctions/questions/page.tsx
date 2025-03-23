@@ -40,15 +40,23 @@ export default function AdvancedFunctionsQuestions() {
 
   const handleSubmit = async () => {
     if (!userInput.trim()) return;
-
+  
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/answers", {
+      const response = await fetch("http://localhost:8000/quiz/answers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify([{ question: assessmentInfo[currentQuestion], answer: userInput }]),
+        body: JSON.stringify({
+          language: "English",
+          test_answers: [
+            {
+              question_number: currentQuestion,
+              user_response: userInput
+            }
+          ]
+        }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         setRequestId(data.request_id);
@@ -61,6 +69,7 @@ export default function AdvancedFunctionsQuestions() {
       setLoading(false);
     }
   };
+  
 
   return (
     <main className="min-h-screen flex bg-[#121212] text-white animate-fade-down transition-all duration-300 ease-in-out">
