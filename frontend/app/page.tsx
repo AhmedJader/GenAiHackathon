@@ -18,7 +18,7 @@ export default function Home() {
 
       <Nav />
 
-      <div className="load_animation flex flex-col items-center justify-center mx-auto text-center">
+      <div className="animate-fade-down transition-all mt-20 duration-1000 ease-in-out flex flex-col items-center justify-center mx-auto text-center">
         <Image
           src="/bruh.webp"
           alt="IntelliEarth Logo"
@@ -59,13 +59,36 @@ export default function Home() {
           </Button>
           <Button
             variant="outline"
-            onClick={() => router.push("#learn")}
+            onClick={() => router.push("/dashboard")}
             className="hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out"
             size="lg"
           >
             Learn More
           </Button>
         </div>
+        <Image
+          src="/overlay.webp"
+          alt="IntelliEarth Logo"
+          width={500}
+          height={500}
+          className="fixed top-153 z-20"
+          />
+
+        {/* IntelliEarth Logo and View Image with Radial Blur Effect */}
+        <div className="relative mt-10">
+          <Image
+            src="/view.jpg"
+            alt="IntelliEarth Logo"
+            width={1000}
+            height={1000}
+            className="mt-10 border-8 border-gray-500 rounded-lg shadow-2xl"
+          />
+
+          {/* Radial Gradient Overlay for Blur Effect at the Bottom of the Image */}
+          <div className="absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t from-white to-transparent"></div>
+          <div className="absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t from-white to-transparent"></div>
+        </div>
+
       </div>
     </main>
   );

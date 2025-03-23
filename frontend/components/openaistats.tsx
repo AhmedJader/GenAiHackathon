@@ -33,7 +33,6 @@ export default function OpenAIPower() {
 
   return (
     <div className="flex flex-col items-center justify-center p-6 bg-red-900 text-white rounded-xl shadow-lg">
-      TODO add a shad cn chart
       <h2 className="text-2xl font-bold">🔋 OpenAI Live Power Usage</h2>
       <p className="text-4xl font-semibold mt-2">{powerUsed.toFixed(2)} kWh</p>
       <span className="text-sm text-gray-400">
