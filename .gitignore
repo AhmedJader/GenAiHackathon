@@ -2,3 +2,4 @@
 .venv
 venv
 __pycache__
+backend/src/.langchain.db
