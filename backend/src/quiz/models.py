@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, FilePath
 from typing import List, Dict, Any
 
 class TestAnswer(BaseModel):
@@ -11,3 +11,4 @@ class RequestID(BaseModel):
 class TestResponse(BaseModel):
     test_answers:List[TestAnswer]
     language: str
+    file_rag: FilePath
