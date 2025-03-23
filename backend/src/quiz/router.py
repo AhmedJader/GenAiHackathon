@@ -1,18 +1,40 @@
+from langchain_ollama.llms import OllamaLLM
+from langchain_google_vertexai import VertexAI
+from langchain_openai import ChatOpenAI
+from langchain_community.document_loaders import PyPDFLoader
+from langchain.cache import SQLiteCache
+from langchain.globals import set_llm_cache
+from langchain_ollama import OllamaEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from typing import List, Dict
 from typing import List
-import uuid
-
 from fastapi import APIRouter
 from fastapi.responses import PlainTextResponse
+import json
+import os
+import uuid
+
 
 import schema
 from . import models
 quiz_router = APIRouter()
 
 @quiz_router.post("/answers", response_model=models.RequestID)
-async def post_answers(answers: List[models.TestResponse]):
+async def post_answers(answers: models.TestResponse):
     # run llm logic using "answers"
     # run other functions
     # make sure everything is non-blocking
+    
+    
+    if answers.language == "English":
+        return
+    
+    if answers.language == "French":
+        return
 
     request_id = str(uuid.uuid4())
 
