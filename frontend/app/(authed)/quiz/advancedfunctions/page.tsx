@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function AdvancedFunctions() {
   return (
-    <main className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+    <main className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 animate-fade-down">
       {/* Hero Section */}
       <div className="relative h-[70vh] w-full overflow-hidden">
         <Image

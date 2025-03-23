@@ -63,7 +63,7 @@ export default function AdvancedFunctionsQuestions() {
   };
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+    <main className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 animate-fade-down">
       {/* Hero Section */}
       <div className="relative h-[40vh] w-full overflow-hidden">
         <Image
@@ -76,9 +76,9 @@ export default function AdvancedFunctionsQuestions() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 backdrop-blur-sm flex items-center px-40">
           <div className="animate-fade-in">
             <h1 className="text-6xl font-bold text-white tracking-tight">
-              Quiz Time
+              Advanced Functions
               <p className="text-3xl mt-4 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
-                Advanced Functions - Grade 12
+                Assessment
               </p>
             </h1>
           </div>
@@ -112,14 +112,14 @@ export default function AdvancedFunctionsQuestions() {
                     <Button
                       key={index}
                       variant="outline"
-                      className={`w-full text-left justify-start h-auto py-6 px-8 text-lg transition-all duration-300 text-black ${
+                      className={`w-full text-left justify-start h-auto py-6 px-8 text-lg transition-all duration-300 text-black hover:text-black ${
                         selectedAnswers[currentQuestion] === index
                           ? "border-blue-500 bg-blue-50 text-black font-medium"
                           : "hover:bg-gray-50 hover:border-blue-500"
                       }`}
                       onClick={() => handleAnswerSelect(currentQuestion, index)}
                     >
-                      <span className="mr-4 text-black font-bold">
+                      <span className="mr-4 text-black  font-bold">
                         {String.fromCharCode(65 + index)}.
                       </span>
                       {option}
@@ -134,7 +134,7 @@ export default function AdvancedFunctionsQuestions() {
                     className={`flex items-center gap-2 py-6 px-8 text-lg transition-all duration-300 text-black font-medium ${
                       currentQuestion === 0
                         ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-gray-50 hover:border-blue-500"
+                        : "hover:bg-gray-50 hover:text-black hover:border-blue-500"
                     }`}
                     onClick={() =>
                       currentQuestion > 0 &&
@@ -152,7 +152,7 @@ export default function AdvancedFunctionsQuestions() {
                     className={`flex items-center gap-2 py-6 px-8 text-lg transition-all duration-300 text-black font-medium ${
                       currentQuestion === questions.length - 1
                         ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-gray-50 hover:border-blue-500"
+                        : "hover:bg-gray-50 hover:text-black hover:border-blue-500"
                     }`}
                     onClick={() =>
                       currentQuestion < questions.length - 1 &&
@@ -199,7 +199,7 @@ export default function AdvancedFunctionsQuestions() {
 
               {/* Submit Button */}
               <Button
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg py-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-white font-medium"
+                className="w-full bg-green-400 hover:bg-green-300 text-lg py-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-white font-medium"
                 onClick={handleSubmit}
               >
                 Submit Quiz
