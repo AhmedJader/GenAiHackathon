@@ -52,7 +52,7 @@ export default function Home() {
       <div className="relative w-full overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.4),rgba(255,255,255,0))]"></div>
           <div className="">
-            <h1 className="text-7xl mt-25 font-bold tracking-tight text-center">
+            <h1 className="text-7xl mt-25 font-bold tracking-tight animate-fade-down text-center">
               Available Subjects
               <p className="text-4xl mt-2 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
                 Choose Your Path
@@ -62,7 +62,7 @@ export default function Home() {
         </div>
 
       {/* Subject Cards */}
-      <div className="container mx-auto py-16">
+      <div className="container mx-auto py-16 animate-fade-down">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {subjects.map((subject) => (
             <div
