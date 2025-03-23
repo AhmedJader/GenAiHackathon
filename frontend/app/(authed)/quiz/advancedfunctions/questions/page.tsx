@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import {
 } from "@/components/ui/select";
 
 export default function AdvancedFunctionsQuestions() {
+  const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(10).fill(""));
   const [loading, setLoading] = useState(false);
@@ -53,6 +55,13 @@ export default function AdvancedFunctionsQuestions() {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
+
+    // Simulate an async operation (e.g., form submission)
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    setLoading(false);
+    router.push("/report"); // Redirect to /report
     if (!file) {
       alert("Please upload your curriculum PDF.");
       return;
@@ -127,7 +136,8 @@ export default function AdvancedFunctionsQuestions() {
             type="file"
             accept="application/pdf"
             onChange={handleFileChange}
-            className="mt-2 w-full text-sm text-white"
+            className="mt-2 hover:cursor-pointer text-red-800 w-full text-sm"
+            title="Upload Curriculum PDF"
           />
         </div>
 
