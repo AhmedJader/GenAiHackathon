@@ -1,5 +1,8 @@
 # GenAiHackathon
 
+
+![IntelliEarth](/frontend/public/Homepage.png)
+
 # 🌍 Sustainable Agentic Tutor — AI for Equity, Education & the Planet
 
 > **Empowering learning through self-hosted LLMs. Designed for education. Built for sustainability. Driven by DEI.**
